@@ -73,9 +73,9 @@
 ## 如何构建 ##
 
 从源码构建也很简单：
-
+- 安装JDK和Ant
 - git clone git@github.com:vispractice/Amoeba-Plus-For-MySQL.git
-- cd ${AMOEBA-PLUS-HOME}/com.vispractice.amoeba.base
+- cd Amoeba-Plus-For-MySQL/com.vispractice.amoeba.base
 - ant
 - cd ..
 
