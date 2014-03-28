@@ -62,7 +62,7 @@
 - 安装JDK(> 1.6)
 - 准备测试数据库
   默认的配置是将`Amoeba Plus`作为`localhost:3306/test`数据库的代理，所以需确保本地数据库存在test数据库，且已经启动。
-- 下载`Amoeba Plus For MySQL`二进制包: [tar.gz](https://github.com/vispractice/Amoeba-Plus-For-MySQL/blob/master/release/amoeba-plus-mysql-1.0-RC1.tar.gz?raw=true  "tar.gz") | [zip](https://github.com/vispractice/Amoeba-Plus-For-MySQL/blob/master/release/amoeba-plus-mysql-1.0-RC1.zip "zip")
+- 下载`Amoeba Plus For MySQL`二进制包: [tar.gz](https://github.com/vispractice/Amoeba-Plus-For-MySQL/blob/master/release/amoeba-plus-mysql-1.0-RC1.tar.gz?raw=true  "tar.gz") | [zip](https://github.com/vispractice/Amoeba-Plus-For-MySQL/blob/master/release/amoeba-plus-mysql-1.0-RC1.zip?raw=true "zip")
 - 启动
   ./startup.bat(For Windows)
   或者
