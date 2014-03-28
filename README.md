@@ -2,7 +2,7 @@
 `Amoeba Plus For MySQL`是基于`Amoeba For MySQL`项目的一个改进版本。在保留
 基本的透明分库分表和读写分离特性的基础上，增加了如下特性：
 
-- 多用户
+- 多用户  
   用户名作为路由的一个依据，这样可以为不同的用户配置不同的路由规则。
 
         -- user.xml
@@ -15,7 +15,7 @@
         <tableRule name="*" schema="test" users="root" defaultPools="writePool" />
         <tableRule name="*" schema="other" users="other" defaultPools="writePool" />
 
-- 事务
+- 事务  
   支持单库事务。分布式事务是采用MySQL原有的XA机制，需主动声明开启XA事务。
   声明开启XA是通过SQL Hint的方式进行的：
 
@@ -24,7 +24,7 @@
         .....
         commit
 
-- 全局序列(需要自己实现ID生成器)
+- 全局序列(需要自己实现ID生成器)  
   在做水平切分时，需要保证同一个表的不同分片的主键全局唯一性。做法有很多，一种常见的做法就是通过全局序列。`Amoeba Plus`提供了全局序列的方式，全局序列的生成方式需要自己实现。`Amoeba Plus`默认提供了一个内存全局序列生成器。
 
         -- 创建全局序列
@@ -40,7 +40,7 @@
         SELECT customers_seq.nextval FROM DUAL;
         INSERT foo (id, value) values (customers_seq.nextval, 0);
 
-- 简单的SQL Hint
+- 简单的SQL Hint  
   通过SQL Hint，可以人为干预`Amoeba Plus`的路由结果。最典型的，在读写分离时，为了在写完之后马上读到最新的结果，就需要将读语句强制发往master库，从而避免复制延迟可能导致的数据不一致。
 
         inster into ...
@@ -50,10 +50,10 @@
 
         /* pools="pool#1, pool#2" */ select * from ... # 指定发往pool#1和pool#2
 
-- 一些语句的解析增强
+- 一些语句的解析增强  
   当我们用`TPCC-MySQL`或`sysbench`压测`Amoeba`时，会出现由于语句解析而导致路由失败的情况，针对这些情况，我们做了SQL解析上的一些增强。另外增加DDL语句的识别。
 
-- 多种配置数据源的适配
+- 多种配置数据源的适配  
   `Amoeba`默认的配置是存储在XML文件中，后面我们将配置的加载从`Amoeba`的核心
   中抽取出来，作为独立的组件。这样可以方便的支持不同的配置数据源。
 
@@ -68,7 +68,7 @@
   或者
   ./startup.sh(For Linux)
 
-** Tips: ** 如需更多配置，可以参考[Amoeba使用指南](http://docs.hexnova.com/amoeba/ "Amoeba使用指南")。Amoba Plus的配置相对之前做了一些细微调整，但是切分规则和读写分离规则都不变。
+**Tips:** 如需更多配置，可以参考[Amoeba使用指南](http://docs.hexnova.com/amoeba/ "Amoeba使用指南")。Amoba Plus的配置相对之前做了一些细微调整，但是切分规则和读写分离规则都不变。
 
 ## 如何构建 ##
 
