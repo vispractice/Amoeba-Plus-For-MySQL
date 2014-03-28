@@ -1,6 +1,4 @@
-
-`Amoeba Plus For MySQL`是基于`Amoeba For MySQL`项目的一个改进版本。在保留
-基本的透明分库分表和读写分离特性的基础上，增加了如下特性：
+`Amoeba Plus For MySQL`是基于`Amoeba For MySQL`项目的一个改进版本。在保留基本的透明分库分表和读写分离特性的基础上，增加了如下特性：
 
 - 多用户  
   用户名作为路由的一个依据，这样可以为不同的用户配置不同的路由规则。
@@ -16,8 +14,7 @@
         <tableRule name="*" schema="other" users="other" defaultPools="writePool" />
 
 - 事务  
-  支持单库事务。分布式事务是采用MySQL原有的XA机制，需主动声明开启XA事务。
-  声明开启XA是通过SQL Hint的方式进行的：
+  支持单库事务。分布式事务是采用MySQL原有的XA机制，需主动声明开启XA事务。声明开启XA是通过SQL Hint的方式进行的：
 
         set autocommit = 0
         /* set isXA = 1 */
@@ -54,19 +51,18 @@
   当我们用`TPCC-MySQL`或`sysbench`压测`Amoeba`时，会出现由于语句解析而导致路由失败的情况，针对这些情况，我们做了SQL解析上的一些增强。另外增加DDL语句的识别。
 
 - 多种配置数据源的适配  
-  `Amoeba`默认的配置是存储在XML文件中，后面我们将配置的加载从`Amoeba`的核心
-  中抽取出来，作为独立的组件。这样可以方便的支持不同的配置数据源。
+  `Amoeba`默认的配置是存储在XML文件中，后面我们将配置的加载从`Amoeba`的核心中抽取出来，作为独立的组件。这样可以方便的支持不同的配置数据源。
 
 ## 如何运行 ##
 
 - 安装JDK(> 1.6)
 - 准备测试数据库
   默认的配置是将`Amoeba Plus`作为`localhost:3306/test`数据库的代理，所以需确保本地数据库存在test数据库，且已经启动。
+- 修改conf/dbServers.xml，根据实际情况替换数据库的用户名和密码
 - 下载`Amoeba Plus For MySQL`二进制包: [tar.gz](https://github.com/vispractice/Amoeba-Plus-For-MySQL/blob/master/release/amoeba-plus-mysql-1.0-RC1.tar.gz?raw=true  "tar.gz") | [zip](https://github.com/vispractice/Amoeba-Plus-For-MySQL/blob/master/release/amoeba-plus-mysql-1.0-RC1.zip?raw=true "zip")
-- 启动
-  ./startup.bat(For Windows)
-  或者
-  ./startup.sh(For Linux)
+- 启动  
+  > startup.bat(For Windows)  
+  $ ./startup.sh(For Linux)
 
 **Tips:** 如需更多配置，可以参考[Amoeba使用指南](http://docs.hexnova.com/amoeba/ "Amoeba使用指南")。Amoba Plus的配置相对之前做了一些细微调整，但是切分规则和读写分离规则都不变。
 
