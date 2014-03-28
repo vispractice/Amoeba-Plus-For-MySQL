@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="gbk"?>
+<!DOCTYPE amoeba:function SYSTEM "function.dtd">
+
+<!-- using parse rule expression -->
+<amoeba:function xmlns:amoeba="http://amoeba.meidusa.com/">
+
+  <!--
+    规则函数列表
+    系统默认保持一份，这儿如果function name 名字跟系统内部一样，将覆盖系统内部的规则函数
+    规则函数的编写：必须继承com.meidusa.amoeba.sqljep.function.PostfixCommand 类
+  -->
+
+</amoeba:function>

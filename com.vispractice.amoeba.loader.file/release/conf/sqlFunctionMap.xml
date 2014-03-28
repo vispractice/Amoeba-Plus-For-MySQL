@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="gbk"?>
+<!DOCTYPE amoeba:function SYSTEM "function.dtd">
+
+<!-- using parse sql -->
+<amoeba:function xmlns:amoeba="http://amoeba.meidusa.com/">
+
+	<function name="+" class="com.meidusa.amoeba.parser.function.Add"/>
+	
+	<function name="AND" class="com.meidusa.amoeba.parser.function.And"/>
+
+	<function name="-" class="com.meidusa.amoeba.parser.function.Sub"/>
+	
+	<function name="*" class="com.meidusa.amoeba.parser.function.Multiply"/>
+	
+	<function name="/" class="com.meidusa.amoeba.parser.function.Divide"/>
+	
+	<function name="DIV" class="com.meidusa.amoeba.parser.function.Divide"/>
+	
+	<function name="MOD" class="com.meidusa.amoeba.parser.function.Modulus"/>
+	
+	<function name="%" class="com.meidusa.amoeba.parser.function.Modulus"/>
+	
+	<function name="||" class="com.meidusa.amoeba.parser.function.Concat"/>
+	
+	<function name="CONCAT" class="com.meidusa.amoeba.parser.function.Concat"/>
+	
+	<function name="CONCAT_WS" class="com.meidusa.amoeba.parser.function.ConcatWs"/>
+	
+	<function name="NOW" class="com.meidusa.amoeba.parser.function.Now"/>
+	
+	<function name="SYSDATE" class="com.meidusa.amoeba.parser.function.Now"/>
+	
+	<function name="CURRENT_TIMESTAMP" class="com.meidusa.amoeba.parser.function.Now"/>
+	
+	<function name="CURRENT_DATE" class="com.meidusa.amoeba.parser.function.CurrentDate"/>
+	
+	<function name="ADDDATE" class="com.meidusa.amoeba.parser.function.TimeConverter">
+		<property name="defaultField">5</property>
+	</function>
+	
+	<function name="YEAR" class="com.meidusa.amoeba.parser.function.TimeForType">
+		<property name="field">1</property>
+	</function>
+	
+	<function name="MONTH" class="com.meidusa.amoeba.parser.function.TimeForType">
+		<property name="field">2</property>
+	</function>
+	
+	<function name="WEEK" class="com.meidusa.amoeba.parser.function.TimeForType">
+		<property name="field">3</property>
+	</function>
+	
+	<function name="DAY" class="com.meidusa.amoeba.parser.function.TimeForType">
+		<property name="field">5</property>
+	</function>
+	
+	<function name="HOUR" class="com.meidusa.amoeba.parser.function.TimeForType">
+		<property name="field">11</property>
+	</function>
+	
+	<function name="MINUTE" class="com.meidusa.amoeba.parser.function.TimeForType">
+		<property name="field">12</property>
+	</function>
+	
+	<function name="SECOND" class="com.meidusa.amoeba.parser.function.TimeForType">
+		<property name="field">13</property>
+	</function>
+	
+	<function name="MICROSECOND" class="com.meidusa.amoeba.parser.function.TimeForType">
+		<property name="field">21</property>
+	</function>
+	
+	<function name="ASCII" class="com.meidusa.amoeba.parser.function.Ascii"/>
+	
+	<function name="UNIX_TIMESTAMP" class="com.meidusa.amoeba.parser.function.UnixTimestamp"/>
+	
+	<function name="INSERT" class="com.meidusa.amoeba.parser.function.Insert"/>
+	
+	<function name="INSTR" class="com.meidusa.amoeba.parser.function.Instr"/>
+	
+	<function name="SUBSTRING" class="com.meidusa.amoeba.parser.function.Substring"/>
+	
+	<function name="UNKNOWFUNCTION" class="com.meidusa.amoeba.parser.function.UnknowableFunction"/>
+	<function name="VERSION" class="com.meidusa.amoeba.parser.function.UnknowableFunction"/>
+	<function name="FIND_IN_SET" class="com.meidusa.amoeba.parser.function.UnknowableFunction"/>
+	<function name="FOUND_ROWS" class="com.meidusa.amoeba.parser.function.UnknowableFunction"/>
+	<function name="DATABASE" class="com.meidusa.amoeba.parser.function.UnknowableFunction"/>
+	<function name="LAST_INSERT_ID" class="com.meidusa.amoeba.parser.function.LastInsertId"/>
+	<function name="@@IDENTITY" class="com.meidusa.amoeba.parser.function.LastInsertId"/>
+	<function name="USER" class="com.meidusa.amoeba.parser.function.UnknowableFunction"/>
+	<function name="UUID" class="com.meidusa.amoeba.parser.function.UnknowableFunction"/>
+	<function name="INET_ATON" class="com.meidusa.amoeba.parser.function.UnknowableFunction"/>
+	<function name="REPLACE" class="com.meidusa.amoeba.parser.function.UnknowableFunction"/>
+	<function name="IF" class="com.meidusa.amoeba.parser.function.UnknowableFunction"/>
+	<function name="FROM_UNIXTIME" class="com.meidusa.amoeba.parser.function.UnknowableFunction"/>
+	<function name="rand" class="com.meidusa.amoeba.parser.function.UnknowableFunction"/>
+	<function name="LEFT" class="com.meidusa.amoeba.parser.function.UnknowableFunction"/>
+	<function name="GROUP_CONCAT" class="com.meidusa.amoeba.parser.function.UnknowableFunction"/>
+	
+</amoeba:function>

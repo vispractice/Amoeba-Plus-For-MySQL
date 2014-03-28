@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="gbk"?>
+
+<!DOCTYPE amoeba:dbServers SYSTEM "dbserver.dtd">
+<amoeba:dbServers xmlns:amoeba="http://amoeba.meidusa.com/">
+
+    <!--
+      Each dbServer needs to be configured into a Pool,
+      If you need to configure multiple dbServer with load balancing that can be simplified by the following configuration:
+       add attribute with name virtual = "true" in dbServer, but the configuration does not allow the element with name factoryConfig
+       such as 'multiPool' dbServer
+    -->
+
+  <dbServer name="abstractServer" abstractive="true">
+    <factoryConfig class="com.meidusa.amoeba.mysql.net.MysqlServerConnectionFactory">
+      <property name="manager">${defaultManager}</property>
+      <property name="sendBufferSize">64</property>
+      <property name="receiveBufferSize">128</property>
+
+      <!-- mysql port -->
+      <property name="port">3306</property>
+
+      <!-- mysql user -->
+      <property name="user">root</property>
+      
+	  <!-- mysql password -->
+      <property name="password">yxtech</property>
+
+    </factoryConfig>
+
+    <poolConfig class="com.meidusa.amoeba.net.poolable.PoolableObjectPool">
+      <property name="maxActive">10</property>
+      <property name="maxIdle">10</property>
+      <property name="minIdle">5</property>
+      <property name="minEvictableIdleTimeMillis">600000</property>
+      <property name="timeBetweenEvictionRunsMillis">600000</property>
+      <property name="testOnBorrow">true</property>
+      <property name="testWhileIdle">true</property>
+    </poolConfig>
+  </dbServer>
+
+  <dbServer name="writePool"  parent="abstractServer">
+    <factoryConfig>
+      <!-- mysql ip -->
+      <property name="ipAddress">localhost</property>
+
+      <!-- mysql schema -->
+      <property name="schema">test</property>
+    </factoryConfig>
+  </dbServer>
+
+  <dbServer name="readPool"  parent="abstractServer">
+    <factoryConfig>
+      <!-- mysql ip -->
+      <property name="ipAddress">localhost</property>
+
+      <!-- mysql schema -->
+      <property name="schema">test</property>
+    </factoryConfig>
+  </dbServer>
+
+</amoeba:dbServers>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="IpAccessListFileLoader">
+   <implementation class="com.meidusa.amoeba.config.loader.IpAccessListFileLoader"/>
+   <service>
+     <provide interface="com.meidusa.amoeba.config.loader.IpAccessListLoader" />
+   </service>
+</scr:component>

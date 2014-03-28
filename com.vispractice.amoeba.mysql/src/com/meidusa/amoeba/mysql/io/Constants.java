@@ -1,0 +1,151 @@
+/*
+ Copyright (C) 2002-2004 MySQL AB
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of version 2 of the GNU AFFERO GENERAL PUBLIC LICENSE as 
+ published by the Free Software Foundation.
+
+ There are special exceptions to the terms and conditions of the GPL 
+ as it is applied to this software. View the full text of the 
+ exception in file EXCEPTIONS-CONNECTOR-J in the directory of this 
+ software distribution.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU AFFERO GENERAL PUBLIC LICENSE for more details.
+
+ You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+
+ */
+/*
+ * 	This program is free software; you can redistribute it and/or modify it under the terms of 
+ * the GNU AFFERO GENERAL PUBLIC LICENSE as published by the Free Software Foundation; either version 3 of the License, 
+ * or (at your option) any later version. 
+ * 
+ * 	This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+ * See the GNU AFFERO GENERAL PUBLIC LICENSE for more details. 
+ * 	You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE along with this program; 
+ * if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+package com.meidusa.amoeba.mysql.io;
+
+/**
+ * Represents various constants used in the driver.
+ * 
+ * @author Mark Matthews
+ * 
+ * @version $Id: Constants.java 6433 2007-05-18 18:38:56Z mmatthews $
+ */
+public class Constants {
+	/**
+	 * Avoids allocation of empty byte[] when representing 0-length strings.
+	 */
+	public final static byte[] EMPTY_BYTE_ARRAY = new byte[0];
+
+	public final static byte[] SLASH_STAR_SPACE_AS_BYTES = new byte[] {
+			(byte) '/', (byte) '*', (byte) ' ' };
+
+	public final static byte[] SPACE_STAR_SLASH_SPACE_AS_BYTES = new byte[] {
+			(byte) ' ', (byte) '*', (byte) '/', (byte) ' ' };
+
+	/*
+	 * We're still stuck on JDK-1.4.2, but want the Number.valueOf() methods
+	 */
+	private static final Character[] CHARACTER_CACHE = new Character[128];
+
+	private static final int BYTE_CACHE_OFFSET = 128;
+
+	private static final Byte[] BYTE_CACHE = new Byte[256];
+
+	private static final int INTEGER_CACHE_OFFSET = 128;
+
+	private static final Integer[] INTEGER_CACHE = new Integer[256];
+
+	private static final int SHORT_CACHE_OFFSET = 128;
+
+	private static final Short[] SHORT_CACHE = new Short[256];
+
+	private static final Long[] LONG_CACHE = new Long[256];
+
+	private static final int LONG_CACHE_OFFSET = 128;
+
+	static {
+		for (int i = 0; i < CHARACTER_CACHE.length; i++) {
+			CHARACTER_CACHE[i] = new Character((char) i);
+		}
+
+		for (int i = 0; i < INTEGER_CACHE.length; i++) {
+			INTEGER_CACHE[i] = new Integer(i - 128);
+		}
+
+		for (int i = 0; i < SHORT_CACHE.length; i++) {
+			SHORT_CACHE[i] = new Short((short) (i - 128));
+		}
+
+		for (int i = 0; i < LONG_CACHE.length; i++) {
+			LONG_CACHE[i] = new Long(i - 128);
+		}
+
+		for (int i = 0; i < BYTE_CACHE.length; i++)
+			BYTE_CACHE[i] = new Byte((byte) (i - BYTE_CACHE_OFFSET));
+	}
+
+	/** Same behavior as JDK-1.5's Constants.characterValueOf(int) */
+	
+	public static Character characterValueOf(char c) {
+		if (c <= 127) {
+			return CHARACTER_CACHE[c];
+		}
+
+		return new Character(c);
+	}
+
+	/** Same behavior as JDK-1.5's Byte.valueOf(int) */
+
+	public static final Byte byteValueOf(byte b) {
+		return BYTE_CACHE[b + BYTE_CACHE_OFFSET];
+	}
+
+	/** Same behavior as JDK-1.5's Integer.valueOf(int) */
+
+	public static final Integer integerValueOf(int i) {
+		if (i >= -128 && i <= 127) {
+			return INTEGER_CACHE[i + INTEGER_CACHE_OFFSET];
+		}
+
+		return new Integer(i);
+	}
+
+	/** Same behavior as JDK-1.5's Constants.shortValueOf(int) */
+	
+	public static Short shortValueOf(short s) {
+
+		if (s >= -128 && s <= 127) {
+			return SHORT_CACHE[s + SHORT_CACHE_OFFSET];
+		}
+		
+		return new Short(s);
+	}
+
+	/** Same behavior as JDK-1.5's Long.valueOf(int) */
+	
+	public static final Long longValueOf(long l) {
+		if (l >= -128 && l <= 127) {
+			return LONG_CACHE[(int) l + LONG_CACHE_OFFSET];
+		}
+
+		return new Long(l);
+	}
+
+	/**
+	 * Prevents instantiation
+	 */
+	private Constants() {
+	}
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!ELEMENT className ( #PCDATA ) >
+<!ELEMENT amoeba:dbServers ( dbServer+ ) >
+<!ATTLIST amoeba:dbServers
+  xmlns:amoeba CDATA #FIXED "http://amoeba.meidusa.com/" 
+>
+
+<!ELEMENT dbServer ( factoryConfig?, poolConfig* ) >
+<!ATTLIST dbServer name NMTOKEN #REQUIRED >
+<!ATTLIST dbServer virtual NMTOKEN #IMPLIED >
+<!ATTLIST dbServer abstractive NMTOKEN #IMPLIED >
+<!ATTLIST dbServer parent NMTOKEN #IMPLIED >
+
+<!ELEMENT factoryConfig (property* ) >
+<!ATTLIST factoryConfig class NMTOKEN #IMPLIED >
+
+<!ELEMENT poolConfig (property* ) >
+<!ATTLIST poolConfig class NMTOKEN #IMPLIED >
+
+<!ELEMENT property ( #PCDATA | bean)* >
+
+<!ELEMENT bean (property*) >
+<!ATTLIST bean name NMTOKEN #IMPLIED >
+<!ATTLIST bean class NMTOKEN #REQUIRED >
+
+<!ATTLIST property name CDATA #REQUIRED >
+

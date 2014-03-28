@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="gbk"?>
+<!DOCTYPE amoeba:rule SYSTEM "rule.dtd">
+
+<amoeba:rule xmlns:amoeba="http://amoeba.meidusa.com/">
+  <tableRule name="*" schema="test" users="root" defaultPools="writePool" writePools="writePool" readPools="readPool"/>
+  
+  <!--  
+  <tableRule name="*" schema="test" users="root,other" defaultPools="writePool" writePools="writePool" readPools="readPool"/>
+  -->
+  
+  <!--
+  <tableRule name="test_table" schema="test_schema" users="root" defaultPools="server1,server2">
+      <rule name="rule1">
+         <parameters>o_id</parameters>
+         <expression><![CDATA[ abs(hash(o_id)) % 2 = 0 ]]></expression>
+         <defaultPools>server1</defaultPools>
+      </rule>
+      <rule name="rule2">
+         <parameters>o_id</parameters>
+         <expression><![CDATA[ abs(hash(o_id)) % 2 = 1 ]]></expression>
+         <defaultPools>server2</defaultPools>
+      </rule>
+   </tableRule>
+   -->
+
+</amoeba:rule>

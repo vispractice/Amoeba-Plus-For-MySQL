@@ -1,0 +1,11 @@
+<!DOCTYPE amoeba:users SYSTEM "user.dtd">
+
+<amoeba:users xmlns:amoeba="http://amoeba.meidusa.com/">
+
+  <user name="root" passwd="yxtech" isAdmin="true" />
+  
+  <!--  
+  <user name="yxtech" passwd="yxtech" />
+  -->
+
+</amoeba:users>

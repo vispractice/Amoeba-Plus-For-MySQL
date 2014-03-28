@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!ENTITY % Boolean "(true|false)">
+
+<!ELEMENT className ( #PCDATA ) >
+<!ELEMENT amoeba:users ( user* ) >
+<!ATTLIST amoeba:users xmlns:amoeba CDATA #FIXED "http://amoeba.meidusa.com/" >
+
+<!ELEMENT user EMPTY>
+<!ATTLIST user name CDATA #REQUIRED >
+<!ATTLIST user passwd CDATA #REQUIRED >
+<!ATTLIST user isAdmin %Boolean; #IMPLIED >

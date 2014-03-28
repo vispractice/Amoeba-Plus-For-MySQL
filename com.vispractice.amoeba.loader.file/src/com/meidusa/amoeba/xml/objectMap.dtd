@@ -1,0 +1,11 @@
+<!ELEMENT bean ( property* ) >
+<!ATTLIST bean class NMTOKEN #REQUIRED >
+
+<!ELEMENT entry ( #PCDATA | bean )* >
+<!ATTLIST entry key NMTOKEN #REQUIRED >
+
+<!ELEMENT objectMap ( entry+ ) >
+<!ATTLIST objectMap version NMTOKEN #REQUIRED >
+
+<!ELEMENT property ( #PCDATA ) >
+<!ATTLIST property name NMTOKEN #REQUIRED >

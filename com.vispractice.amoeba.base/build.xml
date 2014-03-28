@@ -1,0 +1,185 @@
+<project name = "Amoeba Plus For MySQL" default = "project:deploy" basedir = "../" >
+
+    <tstamp prefix="yx">
+        <format property="dt" pattern="yyyy-MM-dd HH:mm:ss.SSS"/>
+        <format property="date" pattern="yyyyMMddHHmm"/>
+    </tstamp>
+
+    <property name="workspace.dir" value="${basedir}"/>
+    <property name="plugins.dir" value="${workspace.dir}/plugins"/>
+
+    <property name="base" value="com.vispractice.amoeba.base"/>
+    <property name="mysql" value="com.vispractice.amoeba.mysql"/>
+    <property name="startup" value="com.vispractice.amoeba.startup"/>
+    <property name="config-loader" value="com.vispractice.amoeba.loader.file" />
+    <property name="seq-fetcher" value="com.vispractice.amoeba.seq.fetcher" />
+    <property name="seq-provider" value="com.vispractice.amoeba.seq.provider" />
+
+    <property name="project.build.dir" value="amoeba-plus-mysql-release-${yx.date}"/>
+    <property name="project.conf.dir" value="${project.build.dir}/conf"/>
+    <property name="project.module.dir" value="${project.build.dir}/module"/>
+    <property name="project.module.core.dir" value="${project.module.dir}/core"/>
+    <property name="project.module.libs.dir" value="${project.module.dir}/libs"/>
+    <property name="module.src.dir" value="src"/>
+    <property name="module.meta.dir" value="META-INF"/>
+    <property name="module.osgi.dir" value="OSGI-INF"/>
+    <property name="module.build.dir" value="build"/>
+    <property name="module.classes.dir" value="${module.build.dir}/classes"/>
+    <property name="module.locallib.dir" value="${module.classes.dir}/lib"/>
+
+    <!-- database dialet -->
+    <property name="dialet.oracle" value="org.hibernate.dialect.Oracle10gDialect"/>
+    <property name="dialet.mysql" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
+
+    <path id = "libs">
+        <fileset dir = "${plugins.dir}/" includes = "*.jar" />
+        <fileset dir = "${workspace.dir}/${project.module.core.dir}" includes = "*.jar" />
+        <fileset dir = "${workspace.dir}/${seq-provider}/lib" includes = "*.jar" />
+    </path>
+
+    <target name="module:compile">
+        <echo>compile module ${module.name}...</echo>
+        <javac
+            source="1.6"
+            target="1.6"
+            destdir = "${module.path}/${module.name}/${module.classes.dir}"
+            debug = "on"
+            compiler = "modern"
+            optimize = "on"
+            deprecation = "on"
+            verbose = "off"
+            nowarn="true"
+            encoding="utf-8">
+            <src path="${module.path}/${module.name}/${module.src.dir}" />
+            <classpath refid = "libs" />
+        </javac>
+        <copy todir="${module.path}/${module.name}/${module.classes.dir}" overwrite="true">
+            <fileset dir="${module.path}/${module.name}/${module.src.dir}">
+                <exclude name = "**/*.java"/>
+                <exclude name = "**/*.svn"/>
+                <exclude name = "**/*.git"/>
+                <exclude name = "**/*.db"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="module:jar">
+        <condition property="local:lib:present">
+            <available file="${module.path}/${module.name}/lib" type="dir" />
+        </condition>
+        <condition property="osgi:dir">
+            <available file="${module.path}/${module.name}/${module.osgi.dir}" type="dir" />
+        </condition>
+
+        <delete dir="${module.path}/${module.name}/${module.build.dir}" />
+        <mkdir dir="${module.path}/${module.name}/${module.build.dir}"/>
+        <mkdir dir="${module.path}/${module.name}/${module.classes.dir}"/>
+        <echo>make build dir ${module.path}/${module.name}/${module.build.dir}...</echo>
+
+        <antcall target="module:compile">
+            <param name="module.path" value="${module.path}" />
+            <param name="module.name" value="${module.name}" />
+        </antcall>
+
+        <mkdir dir="${module.path}/${module.name}/${module.classes.dir}/${module.meta.dir}" />
+        <copy todir="${module.path}/${module.name}/${module.classes.dir}/${module.meta.dir}" overwrite="true">
+            <fileset dir="${module.path}/${module.name}/${module.meta.dir}" includes="**/*" />
+        </copy>
+
+        <antcall target="module:osgi:deploy">
+            <param name="module.path" value="${module.path}" />
+            <param name="module.name" value="${module.name}" />
+        </antcall>
+
+        <antcall target="module:locallib:deploy">
+            <param name="module.path" value="${module.path}" />
+            <param name="module.name" value="${module.name}" />
+        </antcall>
+
+        <jar destfile="${module.path}/${module.name}/${module.build.dir}/${module.name}-v${yx.date}.jar"
+            manifest="${module.path}/${module.name}/${module.classes.dir}/${module.meta.dir}/MANIFEST.MF">
+            <fileset dir="${module.path}/${module.name}/${module.classes.dir}" />
+        </jar>
+
+        <echo>jar module ${module.name}...</echo>
+
+        <copy todir="${workspace.dir}/${project.module.core.dir}" overwrite="true">
+            <fileset dir="${module.path}/${module.name}/${module.build.dir}" includes="*.jar" />
+        </copy>
+
+        <echo>clear build dir ${module.path}/${module.name}/${module.build.dir}...</echo>
+        <delete dir="${module.path}/${module.name}/${module.build.dir}" />
+    </target>
+
+    <target name="module:osgi:deploy" if="osgi:dir">
+        <echo>build dir ${module.path}/${module.name}/${module.classes.dir}/${module.osgi.dir}...</echo>
+        <mkdir dir="${module.path}/${module.name}/${module.classes.dir}/${module.osgi.dir}" />
+        <copy todir="${module.path}/${module.name}/${module.classes.dir}/${module.osgi.dir}" overwrite="true">
+            <fileset dir="${module.path}/${module.name}/${module.osgi.dir}" includes="**/*" />
+        </copy>
+    </target>
+
+    <target name="module:locallib:deploy" if="local:lib:present">
+        <mkdir dir="${module.path}/${module.name}/${module.classes.dir}/lib" />
+        <copy todir="${module.path}/${module.name}/${module.locallib.dir}" overwrite="true">
+            <fileset dir="${module.path}/${module.name}/lib" includes="*.jar" />
+        </copy>
+    </target>
+
+    <target name="project:clean">
+        <delete dir="${project.build.dir}"/>
+    </target>
+
+    <target name="project:init" depends="project:clean">
+        <mkdir dir="${workspace.dir}/${project.build.dir}"/>
+        <mkdir dir="${workspace.dir}/${project.module.core.dir}"/>
+        <mkdir dir="${workspace.dir}/${project.module.libs.dir}"/>
+    </target>
+
+    <target name="project:jar" depends="project:init">
+        <antcall target="module:jar">
+            <param name="module.path" value="${workspace.dir}" />
+            <param name="module.name" value="${seq-fetcher}" />
+        </antcall>
+        <antcall target="module:jar">
+            <param name="module.path" value="${workspace.dir}" />
+            <param name="module.name" value="${base}" />
+        </antcall>
+        <antcall target="module:jar">
+            <param name="module.path" value="${workspace.dir}" />
+            <param name="module.name" value="${config-loader}" />
+        </antcall>
+        <antcall target="module:jar">
+            <param name="module.path" value="${workspace.dir}" />
+            <param name="module.name" value="${seq-provider}" />
+        </antcall>
+        <antcall target="module:jar">
+            <param name="module.path" value="${workspace.dir}" />
+            <param name="module.name" value="${mysql}" />
+        </antcall>
+        <antcall target="module:jar">
+            <param name="module.path" value="${workspace.dir}" />
+            <param name="module.name" value="${startup}" />
+        </antcall>
+    </target>
+
+    <target name="project:deploy" depends="project:jar">
+        <mkdir dir="${workspace.dir}/${project.conf.dir}" />
+        <copy todir="${workspace.dir}/${project.module.libs.dir}" overwrite="true">
+            <fileset dir="${plugins.dir}" includes="*.jar" />
+        </copy>
+        <copy todir="${workspace.dir}/${project.conf.dir}" overwrite="true">
+            <fileset dir="${workspace.dir}/${base}/release/conf" includes="*.*" />
+            <fileset dir="${workspace.dir}/${config-loader}/release/conf" includes="*.*" />
+        </copy>
+        <copy todir="${workspace.dir}/${project.conf.dir}" overwrite="true">
+                    <fileset dir="${workspace.dir}/${base}/${module.src.dir}" includes="log4j.properties" />
+                </copy>
+        <copy todir="${workspace.dir}/${project.build.dir}" overwrite="true">
+            <fileset dir="${workspace.dir}/${base}/release" includes="*.bat,*.sh" />
+        </copy>
+        <replace file="${workspace.dir}/${project.conf.dir}/config.ini" token="$date$" value="${yx.date}" encoding="utf-8"/>
+    </target>
+</project>
+
+

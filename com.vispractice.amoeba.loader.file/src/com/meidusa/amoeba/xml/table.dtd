@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!ELEMENT amoeba:table (table)* >
+<!ATTLIST amoeba:table
+  xmlns:amoeba CDATA #FIXED "http://amoeba.meidusa.com/" 
+>
+<!ATTLIST table name CDATA #REQUIRED >
+<!ELEMENT table (row)* >
+<!ELEMENT row (field)+ >
+<!ELEMENT field (#PCDATA) >
+<!ATTLIST field name CDATA #REQUIRED >
