@@ -13,7 +13,7 @@ import com.meidusa.amoeba.parser.ParseException;
 import com.meidusa.amoeba.parser.Parser;
 
 public class MysqlRuntimeContext extends RuntimeContext {
-	public final static String SERVER_VERSION = "amoeba-plus-for-mysql-1.0-RC1";
+	public final static String SERVER_VERSION = "5.1.45-mysql-amoeba-plus-proxy-1.0-RC1";
 	private static Logger logger = Logger.getLogger(MysqlRuntimeContext.class);
 	private byte               serverCharsetIndex;
 	private int statementCacheSize = 500;
